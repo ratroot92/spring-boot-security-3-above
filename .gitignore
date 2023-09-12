@@ -1,0 +1,67 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+
+
+
+
+
+# FRONTEND
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/home/asd/Desktop/java/config-vault-server/src/frontend/node_modules
+/home/asd/Desktop/java/config-vault-server/src/frontend/.pnp
+/home/asd/Desktop/java/config-vault-server/src/frontend.pnp.js
+/home/asd/Desktop/java/config-vault-server/src/frontend
+/home/asd/Desktop/java/config-vault-server/src/frontend# testing
+/home/asd/Desktop/java/config-vault-server/src/frontend/coverage
+/home/asd/Desktop/java/config-vault-server/src/frontend
+/home/asd/Desktop/java/config-vault-server/src/frontend# production
+/home/asd/Desktop/java/config-vault-server/src/frontend/build
+/home/asd/Desktop/java/config-vault-server/src/frontend
+/home/asd/Desktop/java/config-vault-server/src/frontend# misc
+/home/asd/Desktop/java/config-vault-server/src/frontend.DS_Store
+/home/asd/Desktop/java/config-vault-server/src/frontend.env.local
+/home/asd/Desktop/java/config-vault-server/src/frontend.env.development.local
+/home/asd/Desktop/java/config-vault-server/src/frontend.env.test.local
+/home/asd/Desktop/java/config-vault-server/src/frontend.env.production.local
+
+/home/asd/Desktop/java/config-vault-server/src/frontend/npm-debug.log*
+/home/asd/Desktop/java/config-vault-server/src/frontend/yarn-debug.log*
+/home/asd/Desktop/java/config-vault-server/src/frontend/yarn-error.log*
