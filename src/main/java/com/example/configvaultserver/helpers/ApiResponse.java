@@ -13,6 +13,15 @@ public class ApiResponse {
     Boolean success;
     Map<String, Object> data;
 
+    public ApiResponse badRequest(String message) {
+        this.success = false;
+        this.status = 400;
+        this.data = null;
+        this.message = message;
+        return this;
+
+    }
+
     public ApiResponse internalServerError(String message) {
         this.success = true;
         this.status = 500;

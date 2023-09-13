@@ -6,8 +6,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.configvaultserver.dto.request.PostLoginReq;
+import com.example.configvaultserver.dto.request.RegisterUserAuth;
 import com.example.configvaultserver.helpers.ApiResponse;
 import com.example.configvaultserver.models.RecaptchaResponse;
 import com.example.configvaultserver.models.User;
@@ -22,12 +24,37 @@ public class AuthService {
     private final UserRepository userRepository;
     private final ApiResponse apiResponse;
     private final RecaptchaService recaptchaService;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, ApiResponse apiResponse, RecaptchaService recaptchaService) {
+    public AuthService(UserRepository userRepository, ApiResponse apiResponse, RecaptchaService recaptchaService,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.apiResponse = apiResponse;
         this.recaptchaService = recaptchaService;
+        this.passwordEncoder = passwordEncoder;
 
+    }
+
+    public ApiResponse register(RegisterUserAuth registerUserAuth) {
+        try {
+            if (this.userRepository.existsByEmail(registerUserAuth.getEmail())) {
+                return this.apiResponse
+                        .badRequest("User with email '" + registerUserAuth.getEmail() + "' already exists.");
+            } else {
+                String hashedPassword = this.passwordEncoder.encode(registerUserAuth.getPassword());
+                User newUser = new User(
+                        registerUserAuth.getName(),
+                        registerUserAuth.getEmail(),
+                        hashedPassword,
+                        registerUserAuth.getPhone());
+                newUser = userRepository.save(newUser);
+                Map<String, Object> responseData = Collections.singletonMap("user", newUser);
+                return this.apiResponse.success("Success", responseData);
+
+            }
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public ApiResponse login(PostLoginReq postLoginReq, String recaptchaString) {
