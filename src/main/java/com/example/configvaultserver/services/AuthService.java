@@ -49,8 +49,29 @@ public class AuthService {
                 User newUser = user.get();
                 if (newUser.getPassword().equals(postLoginReq.getPassword())) {
                     Map<String, Object> responseData = Collections.singletonMap("user", recaptchaResponse);
-
                     return this.apiResponse.success("Login Success", responseData);
+                } else {
+                    return this.apiResponse.unAuthroized("Invalid Password.");
+                }
+            } else {
+                return this.apiResponse.unAuthroized("Invalid Credentials.");
+
+            }
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public ApiResponse loginV1(PostLoginReq postLoginReq, String recaptchaString) {
+        try {
+
+            Optional<User> user = userRepository.findByEmail(postLoginReq.getEmail());
+            if (user.isPresent()) {
+                User newUser = user.get();
+                if (newUser.getPassword().equals(postLoginReq.getPassword())) {
+                    // Map<String, Object> responseData = Collections.singletonMap("user",
+                    // recaptchaResponse);
+                    return this.apiResponse.success("Login Success", null);
                 } else {
                     return this.apiResponse.unAuthroized("Invalid Password.");
                 }

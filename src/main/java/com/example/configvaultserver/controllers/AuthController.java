@@ -30,7 +30,20 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody PostLoginReq postLoginReq,
             HttpServletRequest request) {
         try {
-            ApiResponse apiResponse = authService.login(postLoginReq, request.getHeader("gRecaptchaToken"));
+            ApiResponse apiResponse = authService.login(postLoginReq,
+                    request.getHeader("gRecaptchaToken"));
+            return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
+        } catch (Exception e) {
+            this.apiResponse.internalServerError(e.getMessage());
+            return ResponseEntity.status(this.apiResponse.getStatus()).body(this.apiResponse);
+        }
+    }
+
+    @PostMapping("v1/login")
+    public ResponseEntity<?> loginV1(@RequestBody PostLoginReq postLoginReq,
+            HttpServletRequest request) {
+        try {
+            ApiResponse apiResponse = authService.loginV1(postLoginReq, request.getHeader("gRecaptchaToken"));
             return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
         } catch (Exception e) {
             this.apiResponse.internalServerError(e.getMessage());
