@@ -4,15 +4,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.cloud.bootstrap.encrypt.RsaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.configvaultserver.security.RecaptchaProperties;
+import com.example.configvaultserver.security.RsaKeyProperties;
 
-@SpringBootApplication
 // @EnableConfigurationProperties(RecaptchaProperties.class)
-@EnableConfigurationProperties(RsaProperties.class)
+@EnableConfigurationProperties(RsaKeyProperties.class)
+@SpringBootApplication
 public class ConfigVaultServerApplication {
 
 	public static void main(String[] args) {
