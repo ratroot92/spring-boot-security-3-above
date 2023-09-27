@@ -1,34 +1,37 @@
-// package com.example.configvaultserver.controllers;
+package com.example.configvaultserver.controllers;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
-// import org.springframework.security.core.Authentication;
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RestController;
+import java.security.Principal;
 
-// import com.example.configvaultserver.services.TokenService;
+import org.slf4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-// @RestController
+import com.example.configvaultserver.service.TokenService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-// @RequestMapping("/api/v1/auth")
-// public class AuthController {
+@RestController
+@RequestMapping("/api/v1/auth")
 
-// private static final Logger LOG =
-// LoggerFactory.getLogger(AuthController.class);
+public class AuthController {
 
-// private final TokenService tokenService;
+    private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(AuthController.class);
+    private final TokenService tokenService;
 
-// AuthController(TokenService tokenService) {
-// this.tokenService = tokenService;
-// }
+    AuthController(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
 
-// @PostMapping("/token")
-// public String token(Authentication authentication) {
-// LOG.debug("Tpoken requested for user : '{}'", authentication.getName());
-// String token = tokenService.generateToken(authentication);
-// LOG.debug("Token Granted {}", token);
-// return "";
-// }
+    @PostMapping("/token")
+    public String getToken(Authentication authentication) {
 
-// }
+        LOG.debug("Token requested for user : '{}'", authentication.getName());
+        String token = tokenService.generateToken(authentication);
+        LOG.debug("Token granted {}", token);
+        return "" + token;
+    }
+
+}
