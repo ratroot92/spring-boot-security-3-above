@@ -20,7 +20,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import com.example.configvaultserver.services.RecaptchaService;
+// import com.example.configvaultserver.services.RecaptchaService;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                         (authorize) -> {
-                            authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll();
+                            // authorize.requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll();
                             authorize.anyRequest().authenticated();
                         })
                 // Setup OAuth2 with JWT
@@ -62,34 +62,40 @@ public class SecurityConfig {
                 .build();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    // @Bean
+    // public AuthenticationManager
+    // authenticationManager(AuthenticationConfiguration
+    // authenticationConfiguration)
+    // throws Exception {
+    // return authenticationConfiguration.getAuthenticationManager();
 
-    }
+    // }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    // @Bean
+    // public PasswordEncoder passwordEncoder() {
+    // return new BCryptPasswordEncoder();
+    // }
 
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        return new InMemoryUserDetailsManager(User.withUsername("admin").password("admin").authorities("read").build());
+        return new InMemoryUserDetailsManager(
+                // User.withUsername("admin").password("{noop}password").authorities("read").build());
+                User.withUsername("admin").password("admin").authorities("read").build());
+
     }
 
-    @Bean
-    JwtDecoder JwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey(rsaKeyProperties.publicKey()).build();
-    }
+    // @Bean
+    // JwtDecoder JwtDecoder() {
+    // return NimbusJwtDecoder.withPublicKey(rsaKeyProperties.publicKey()).build();
+    // }
 
-    @Bean
-    JwtEncoder jwtEncoder() {
-        JWK jwk = new RSAKey.Builder(rsaKeyProperties.publicKey()).privateKey(rsaKeyProperties.privateKey()).build();
-        JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-        return new NimbusJwtEncoder(jwks);
-    }
+    // @Bean
+    // JwtEncoder jwtEncoder() {
+    // JWK jwk = new
+    // RSAKey.Builder(rsaKeyProperties.publicKey()).privateKey(rsaKeyProperties.privateKey()).build();
+    // JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+    // return new NimbusJwtEncoder(jwks);
+    // }
 
     // public AuthenticationManager authenticationManager(UserDetailsService
     // userDetailsService) {
