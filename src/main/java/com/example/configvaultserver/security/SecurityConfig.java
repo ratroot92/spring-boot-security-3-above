@@ -2,17 +2,22 @@ package com.example.configvaultserver.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.configvaultserver.config.RsaKeyProperties;
@@ -28,9 +33,12 @@ import com.nimbusds.jose.proc.SecurityContext;
 public class SecurityConfig {
 
     private final RsaKeyProperties rsaKeyProperties;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    SecurityConfig(RsaKeyProperties rsaKeyProperties) {
+    SecurityConfig(RsaKeyProperties rsaKeyProperties, CustomUserDetailsService customUserDetailsService) {
         this.rsaKeyProperties = rsaKeyProperties;
+        this.customUserDetailsService = customUserDetailsService;
+
     }
 
     @Bean
@@ -39,20 +47,28 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                         (auth) -> {
+                            auth.requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll();
+                            auth.requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll();
                             auth.anyRequest().authenticated();
                         })
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                .authenticationProvider(this.authenticationProvider())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
 
     @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        return new InMemoryUserDetailsManager(
-                // User.withUsername("admin").password("{noop}password}").authorities("read").build());
-                User.withUsername("admin").password("{noop}admin").authorities("read").build());
+    public AuthenticationProvider authenticationProvider() {
 
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return daoAuthenticationProvider;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

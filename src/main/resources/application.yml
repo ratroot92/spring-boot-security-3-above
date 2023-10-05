@@ -4,3 +4,14 @@ spring:
       host: localhost
       port: 27017
       database: java-db
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: postgres
+    password: postgres
+
+  jpa.properties.hibernate.jdbc.lob.non_contextual_creation: true
+  jpa.properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# Hibernate ddl auto (create, create-drop, validate, update)
+spring.jpa.hibernate.ddl-auto: update
