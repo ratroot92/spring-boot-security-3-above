@@ -2,14 +2,13 @@ package com.example.configvaultserver.repositories;
 
 import java.util.Optional;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.configvaultserver.models.User;
+    public interface UserRepository extends JpaRepository<User, String> {
 
-public interface UserRepository extends MongoRepository<User, String> {
     Boolean existsByEmail(String email);
 
-    // Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email);
 
 }

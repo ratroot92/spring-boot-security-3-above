@@ -1,34 +1,55 @@
-// package com.example.configvaultserver.controllers;
+package com.example.configvaultserver.controllers;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
-// import org.springframework.security.core.Authentication;
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-// import com.example.configvaultserver.services.TokenService;
+import com.example.configvaultserver.dto.request.PostLoginReq;
+import com.example.configvaultserver.dto.request.RegisterUserRequestDto;
+import com.example.configvaultserver.helpers.ApiResponse;
+import com.example.configvaultserver.models.User;
+import com.example.configvaultserver.services.AuthService;
 
-// @RestController
+import jakarta.servlet.http.HttpServletRequest;
 
-// @RequestMapping("/api/v1/auth")
-// public class AuthController {
+@RestController
+@RequestMapping("/api/v1/auth")
+public class AuthController {
 
-// private static final Logger LOG =
-// LoggerFactory.getLogger(AuthController.class);
+    private final AuthService authService;
 
-// private final TokenService tokenService;
+    AuthController(AuthService authService, ApiResponse apiResponse,
+            AuthenticationManager authenticationManager,
+            PasswordEncoder passwordEncoder) {
+        this.authService = authService;
 
-// AuthController(TokenService tokenService) {
-// this.tokenService = tokenService;
-// }
+    }
 
-// @PostMapping("/token")
-// public String token(Authentication authentication) {
-// LOG.debug("Tpoken requested for user : '{}'", authentication.getName());
-// String token = tokenService.generateToken(authentication);
-// LOG.debug("Token Granted {}", token);
-// return "";
-// }
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody RegisterUserRequestDto RegisterUserRequestDto,
+            HttpServletRequest request) {
+        try {
+            User user = authService.register(RegisterUserRequestDto);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
-// }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody PostLoginReq postLoginReq,
+            HttpServletRequest request) {
+        try {
+            User user = authService.login(postLoginReq);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+}

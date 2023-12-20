@@ -1,98 +1,70 @@
-// package com.example.configvaultserver.services;
+package com.example.configvaultserver.services;
 
-// import java.util.Collections;
-// import java.util.Map;
-// import java.util.Optional;
+import java.util.Optional;
 
-// import org.springframework.beans.factory.annotation.Value;
-// import org.springframework.dao.DataAccessException;
-// import org.springframework.security.crypto.password.PasswordEncoder;
-// import org.springframework.stereotype.Service;
-// import com.example.configvaultserver.dto.request.PostLoginReq;
-// import com.example.configvaultserver.dto.request.RegisterUserAuth;
-// import com.example.configvaultserver.helpers.ApiResponse;
-// import com.example.configvaultserver.models.RecaptchaResponse;
-// import com.example.configvaultserver.models.User;
-// import com.example.configvaultserver.repositories.UserRepository;
+import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-// @Service
-// public class AuthService {
+import com.example.configvaultserver.dto.request.PostLoginReq;
+import com.example.configvaultserver.dto.request.RegisterUserRequestDto;
+import com.example.configvaultserver.helpers.ApiResponse;
+import com.example.configvaultserver.models.User;
+import com.example.configvaultserver.repositories.UserRepository;
 
-// @Value("${recaptcha.secretKey}")
-// private String recaptchaSecretKey;
+@Service
+public class AuthService {
 
-// private final UserRepository userRepository;
-// private final ApiResponse apiResponse;
-// private final RecaptchaService recaptchaService;
-// private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-// public AuthService(UserRepository userRepository, ApiResponse apiResponse,
-// RecaptchaService recaptchaService,
-// PasswordEncoder passwordEncoder) {
-// this.userRepository = userRepository;
-// this.apiResponse = apiResponse;
-// this.recaptchaService = recaptchaService;
-// this.passwordEncoder = passwordEncoder;
+    public AuthService(UserRepository userRepository, ApiResponse apiResponse,
+            PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
 
-// }
+    }
 
-// public ApiResponse register(RegisterUserAuth registerUserAuth) {
-// try {
-// if (this.userRepository.existsByEmail(registerUserAuth.getEmail())) {
-// return this.apiResponse
-// .badRequest("User with email '" + registerUserAuth.getEmail() + "' already
-// exists.");
-// } else {
-// String hashedPassword =
-// this.passwordEncoder.encode(registerUserAuth.getPassword());
-// User newUser = new User(
-// registerUserAuth.getName(),
-// registerUserAuth.getEmail(),
-// hashedPassword,
-// registerUserAuth.getPhone());
-// newUser = userRepository.save(newUser);
-// Map<String, Object> responseData = Collections.singletonMap("user", newUser);
-// return this.apiResponse.success("Success", responseData);
+    public User register(RegisterUserRequestDto RegisterUserRequestDto) {
+        try {
+            if (this.userRepository.existsByEmail(RegisterUserRequestDto.getEmail())) {
+                try {
+                    throw new Exception("User already exists.");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            String hashedPassword = this.passwordEncoder.encode(RegisterUserRequestDto.getPassword());
+            User newUser = new User(
+                    RegisterUserRequestDto.getName(),
+                    RegisterUserRequestDto.getEmail(),
+                    hashedPassword,
+                    RegisterUserRequestDto.getPhone());
+            newUser = userRepository.save(newUser);
+            return newUser;
 
-// }
-// } catch (DataAccessException e) {
-// throw new RuntimeException(e.getMessage());
-// }
-// }
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 
-// public ApiResponse login(PostLoginReq postLoginReq, String recaptchaString) {
-// try {
-// if (recaptchaString.isBlank()) {
-// return this.apiResponse.unAuthroized("Invalid Request.");
-// }
-// RecaptchaResponse recaptchaResponse =
-// this.recaptchaService.validateToken(recaptchaString);
+    public User login(PostLoginReq postLoginReq) {
+        try {
+            Optional<User> user = userRepository.findByEmail(postLoginReq.getEmail());
+            if (user.isPresent()) {
+                User newUser = user.get();
+                if (newUser.getPassword().equals(postLoginReq.getPassword())) {
+                    return newUser;
+                } else {
+                    throw new RuntimeException("User not found.");
+                }
+            } else {
+                throw new RuntimeException("User not found."); // Add this line
+            }
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 
-// if (recaptchaResponse.success() == false) {
-// return this.apiResponse.unAuthroized("Invalid Request.");
-// }
-// if (recaptchaResponse.score() < 0.9) {
-// return this.apiResponse.unAuthroized("Invalid Request.");
 
-// }
-// Optional<User> user = userRepository.findByEmail(postLoginReq.getEmail());
-// if (user.isPresent()) {
-// User newUser = user.get();
-// if (newUser.getPassword().equals(postLoginReq.getPassword())) {
-// Map<String, Object> responseData = Collections.singletonMap("user",
-// recaptchaResponse);
-
-// return this.apiResponse.success("Login Success", responseData);
-// } else {
-// return this.apiResponse.unAuthroized("Invalid Password.");
-// }
-// } else {
-// return this.apiResponse.unAuthroized("Invalid Credentials.");
-
-// }
-// } catch (DataAccessException e) {
-// throw new RuntimeException(e.getMessage());
-// }
-// }
-
-// }
+}

@@ -1,34 +1,54 @@
 package com.example.configvaultserver.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-// import com.fasterxml.jackson.annotation.JsonProperty;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-// @JsonInclude(JsonInclude.Include.NON_NULL) // This annotation excludes null fields from serialization
-@Document(collection = "users")
+/***
+ * Difference Between @Size, @Length, and @Column(length=value)
+ * https://www.baeldung.com/jpa-size-length-column-differences
+ *
+ * Difference Between @NotNull, @NotEmpty, and @NotBlank Constraints in Bean
+ * Validation
+ * https://www.baeldung.com/java-bean-validation-not-null-empty-blank
+ */
+
+@Entity(name = "users")
 @Data
-public class User {
+@AllArgsConstructor
+@NoArgsConstructor
+public class User extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
 
-    // @JsonProperty("_id")
-    private String _id;
+    @Column(name = "id")
+    private UUID id;
 
-    // @JsonProperty("name")
+    @Column(name = "name", updatable = true, nullable = false, length = 255)
+    @Size(max = 100, message = "Name must be at most 100 characters")
+
+    @NotBlank(message = "Name is required")
     private String name;
 
-    // @JsonProperty("email")
+    @Column(name = "email", updatable = true, nullable = false, length = 255, unique = true)
     private String email;
 
-    // @JsonProperty("password")
+    @Column(name = "password", updatable = true, nullable = false, length = 255)
     private String password;
 
-    // @JsonProperty("phone")
+    @Column(name = "phone", updatable = true, nullable = false)
     private String phone;
 
-    // @JsonProperty("status")
+    @Column(name = "status", updatable = true, nullable = false)
     private Integer status = 1;
 
     public User(String name, String email, String password, String phone) {
