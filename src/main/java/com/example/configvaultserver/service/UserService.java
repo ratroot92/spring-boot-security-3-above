@@ -4,37 +4,52 @@ import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.example.configvaultserver.controllers.UserController;
+import com.example.configvaultserver.dto.response.GetAllUsersDto;
+import com.example.configvaultserver.dto.response.GetUserByIdDto;
+import com.example.configvaultserver.exceptions.CustomException;
 import com.example.configvaultserver.helpers.ApiResponse;
 import com.example.configvaultserver.models.UserEntity;
 import com.example.configvaultserver.repository.UserRepository;
+import com.example.configvaultserver.response.ApiErrorResponse;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-    private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(UserController.class);
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
 
     }
 
-    public ApiResponse<List<UserEntity>> get() {
+    public GetAllUsersDto get() {
         List<UserEntity> users = userRepository.findAll();
-        return new ApiResponse<List<UserEntity>>().ok(users);
+        GetAllUsersDto getAllUsersDto = new GetAllUsersDto(users);
+        return getAllUsersDto;
     }
 
-    public ApiResponse<UserEntity> getById(String id) {
-        UserEntity user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            return new ApiResponse<UserEntity>().notFound("User not found.");
-        } else {
-            return new ApiResponse<UserEntity>().ok(user);
 
+    public GetUserByIdDto getById(String id) {
+        Optional<UserEntity> user = userRepository.findById(id);
+        if (!user.isPresent()) {
+            throw new CustomException("User not found");
+        } else {
+            GetUserByIdDto getUserByIdDto = new GetUserByIdDto(user.get());
+            return getUserByIdDto;
         }
+
+    }
+
+    public void deleteUserById(String id) throws NotFoundException {
+        userRepository.findById(id).orElseThrow(() -> new NotFoundException());
+        userRepository.deleteById(id);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.configvaultserver.service;
 
+import java.util.concurrent.ExecutionException;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,14 +10,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.configvaultserver.dto.request.PostLoginRequest;
-import com.example.configvaultserver.dto.request.PostRegisterUserRequest;
+import com.example.configvaultserver.dto.request.PostLoginRequestDto;
+import com.example.configvaultserver.dto.request.PostRegisterUserRequestDto;
 import com.example.configvaultserver.dto.response.PostLoginResponse;
 import com.example.configvaultserver.dto.response.PostRegisterUserResponse;
 import com.example.configvaultserver.helpers.ApiResponse;
 import com.example.configvaultserver.models.UserEntity;
 import com.example.configvaultserver.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class AuthService {
 
@@ -33,22 +38,26 @@ public class AuthService {
 
     }
 
-    public ApiResponse<PostLoginResponse> login(PostLoginRequest postLoginRequest) {
+    public PostLoginResponse login(PostLoginRequestDto postLoginRequestDto) {
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-                postLoginRequest.getEmail(),
-                postLoginRequest.getPassword());
+                postLoginRequestDto.getEmail(),
+                postLoginRequestDto.getPassword());
         authentication = authenticationProvider.authenticate(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String accessToken = tokenService.generateToken(authentication);
-        PostLoginResponse postLoginResponse = new PostLoginResponse(authentication, accessToken);
-        return new ApiResponse<PostLoginResponse>().ok(postLoginResponse);
+        UserEntity user=userRepository.findByEmail(postLoginRequestDto.getEmail());
+        log.info("******************************************");
+        log.info("authentication =>"+authentication.toString());
+        log.info("authentication =>"+authentication.isAuthenticated());
+        log.info("******************************************");
+        PostLoginResponse postLoginResponse = new PostLoginResponse(user, accessToken);
+        return  postLoginResponse;
     }
 
-    public ApiResponse<PostRegisterUserResponse> registerUser(PostRegisterUserRequest postRegisterUserRequest) {
-        Boolean userExists = userRepository.existsByEmail(postRegisterUserRequest.getEmail());
-        if (userExists.equals(true)) {
-            return new ApiResponse<PostRegisterUserResponse>().badRequest("User already exists.");
-
+    public PostRegisterUserResponse registerUser(PostRegisterUserRequestDto postRegisterUserRequest) throws Exception {
+        UserEntity userExists = userRepository.findByEmail(postRegisterUserRequest.getEmail());
+        if(userExists!=null){
+            throw new Exception("Duplicate User");
         }
         UserEntity newUser = new UserEntity();
         newUser.setEmail(postRegisterUserRequest.getEmail());
@@ -64,8 +73,12 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String accessToken = tokenService.generateToken(authentication);
         PostRegisterUserResponse postRegisterUserResponse = new PostRegisterUserResponse(newUser, accessToken);
-        return new ApiResponse<PostRegisterUserResponse>().ok(postRegisterUserResponse);
+        return  postRegisterUserResponse;
 
+    }
+
+    public void isAutheticated(){
+         
     }
 
 }

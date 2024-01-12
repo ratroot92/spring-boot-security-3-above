@@ -2,6 +2,8 @@ package com.example.configvaultserver.dto.response;
 
 import org.springframework.security.core.Authentication;
 
-public record PostLoginResponse(Authentication authentication, String accessToken) {
+import com.example.configvaultserver.models.UserEntity;
+
+public record PostLoginResponse(UserEntity user, String accessToken) {
 
 }

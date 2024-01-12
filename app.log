@@ -1,0 +1,73 @@
+2024-01-10T17:27:28.799+05:00 DEBUG 29105 --- [restartedMain] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2024-01-10T17:27:29.624+05:00  WARN 29105 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-01-10T17:27:29.625+05:00  WARN 29105 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : relation "laptop" does not exist, skipping
+2024-01-10T17:27:29.625+05:00  WARN 29105 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-01-10T17:27:29.625+05:00  WARN 29105 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : table "jpa_student" does not exist, skipping
+2024-01-10T17:27:29.626+05:00  WARN 29105 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-01-10T17:27:29.626+05:00  WARN 29105 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : table "laptop" does not exist, skipping
+2024-01-10T17:27:29.626+05:00  WARN 29105 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-01-10T17:27:29.626+05:00  WARN 29105 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : table "users" does not exist, skipping
+2024-01-10T17:27:29.858+05:00  WARN 29105 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-10T17:27:29.921+05:00 DEBUG 29105 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 8 mappings in 'requestMappingHandlerMapping'
+2024-01-10T17:27:29.957+05:00 DEBUG 29105 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-01-10T17:27:30.057+05:00 DEBUG 29105 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-01-10T17:27:30.077+05:00 DEBUG 29105 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-01-10T17:27:33.235+05:00  INFO 29105 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-10T17:27:33.235+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-01-10T17:27:33.235+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-01-10T17:27:33.235+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-01-10T17:27:33.236+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@77220397
+2024-01-10T17:27:33.236+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@5aa299a2
+2024-01-10T17:27:33.237+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-01-10T17:27:33.237+05:00  INFO 29105 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-01-10T17:27:33.252+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.configvaultserver.controllers.AuthController#register(PostRegisterUserRequestDto)
+2024-01-10T17:27:33.252+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.configvaultserver.controllers.AuthController#register(PostRegisterUserRequestDto)
+2024-01-10T17:27:33.255+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/api/v1/auth/register", parameters={}
+2024-01-10T17:27:33.256+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.configvaultserver.controllers.AuthController#register(PostRegisterUserRequestDto)
+2024-01-10T17:27:33.293+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [PostRegisterUserRequestDto(email=maliksblr92@gmail.com, password=pakistan123>, name=Ahmad Kabeer Shauka (truncated)...]
+2024-01-10T17:27:33.819+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-01-10T17:27:33.821+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [ApiResponse(statusCode=200, message=SUCCESS, status=200 OK, success=true, data=PostRegisterUserRespo (truncated)...]
+2024-01-10T17:27:33.829+05:00 DEBUG 29105 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-01-10T17:27:58.930+05:00 DEBUG 29105 --- [http-nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.configvaultserver.controllers.AuthController#login(PostLoginRequestDto)
+2024-01-10T17:27:58.933+05:00 DEBUG 29105 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/api/v1/auth/login", parameters={}
+2024-01-10T17:27:58.933+05:00 DEBUG 29105 --- [http-nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.configvaultserver.controllers.AuthController#login(PostLoginRequestDto)
+2024-01-10T17:27:58.942+05:00 DEBUG 29105 --- [http-nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [PostLoginRequestDto(email=maliksblr92@gmail.com, password=pakistan123>)]
+2024-01-10T17:27:59.100+05:00 DEBUG 29105 --- [http-nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-01-10T17:27:59.100+05:00 DEBUG 29105 --- [http-nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [ApiResponse(statusCode=200, message=SUCCESS, status=200 OK, success=true, data=PostLoginResponse[aut (truncated)...]
+2024-01-10T17:27:59.106+05:00 DEBUG 29105 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-01-10T17:28:01.689+05:00 DEBUG 29105 --- [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.configvaultserver.controllers.AuthController#login(PostLoginRequestDto)
+2024-01-10T17:28:01.692+05:00 DEBUG 29105 --- [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/api/v1/auth/login", parameters={}
+2024-01-10T17:28:01.694+05:00 DEBUG 29105 --- [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.configvaultserver.controllers.AuthController#login(PostLoginRequestDto)
+2024-01-10T17:28:01.705+05:00 DEBUG 29105 --- [http-nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [PostLoginRequestDto(email=maliksblr92@gmail.com, password=pakistan123>)]
+2024-01-10T17:28:01.870+05:00 DEBUG 29105 --- [http-nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-01-10T17:28:01.871+05:00 DEBUG 29105 --- [http-nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [ApiResponse(statusCode=200, message=SUCCESS, status=200 OK, success=true, data=PostLoginResponse[aut (truncated)...]
+2024-01-10T17:28:01.875+05:00 DEBUG 29105 --- [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-01-10T17:28:23.247+05:00 DEBUG 29408 --- [restartedMain] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2024-01-10T17:28:23.889+05:00  WARN 29408 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-01-10T17:28:23.889+05:00  WARN 29408 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : relation "laptop" does not exist, skipping
+2024-01-10T17:28:23.890+05:00  WARN 29408 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-01-10T17:28:23.890+05:00  WARN 29408 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : table "jpa_student" does not exist, skipping
+2024-01-10T17:28:23.890+05:00  WARN 29408 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-01-10T17:28:23.890+05:00  WARN 29408 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : table "laptop" does not exist, skipping
+2024-01-10T17:28:23.890+05:00  WARN 29408 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2024-01-10T17:28:23.890+05:00  WARN 29408 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : table "users" does not exist, skipping
+2024-01-10T17:28:24.103+05:00  WARN 29408 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-10T17:28:24.173+05:00 DEBUG 29408 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 8 mappings in 'requestMappingHandlerMapping'
+2024-01-10T17:28:24.222+05:00 DEBUG 29408 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-01-10T17:28:24.330+05:00 DEBUG 29408 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-01-10T17:28:24.347+05:00 DEBUG 29408 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-01-10T17:28:28.755+05:00  INFO 29408 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-10T17:28:28.756+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-01-10T17:28:28.756+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-01-10T17:28:28.756+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-01-10T17:28:28.758+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@2e650f52
+2024-01-10T17:28:28.758+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@4c06457d
+2024-01-10T17:28:28.759+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-01-10T17:28:28.759+05:00  INFO 29408 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2024-01-10T17:28:28.776+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.configvaultserver.controllers.AuthController#login(PostLoginRequestDto)
+2024-01-10T17:28:28.779+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/api/v1/auth/login", parameters={}
+2024-01-10T17:28:28.780+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.configvaultserver.controllers.AuthController#login(PostLoginRequestDto)
+2024-01-10T17:28:28.824+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [PostLoginRequestDto(email=maliksblr92@gmail.com, password=pakistan123>)]
+2024-01-10T17:28:29.082+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.security.authentication.BadCredentialsException: Bad credentials
+2024-01-10T17:28:29.092+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2024-01-10T17:28:29.093+05:00 DEBUG 29408 --- [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
