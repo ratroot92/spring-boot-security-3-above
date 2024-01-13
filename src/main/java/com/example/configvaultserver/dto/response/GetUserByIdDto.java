@@ -1,7 +1,7 @@
 package com.example.configvaultserver.dto.response;
 
-import com.example.configvaultserver.models.UserEntity;
+import com.example.configvaultserver.models.UserModel;
 
-public record GetUserByIdDto(UserEntity user) {
+public record GetUserByIdDto(UserModel user) {
     
 }

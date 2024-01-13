@@ -1,7 +1,7 @@
 package com.example.configvaultserver.dto.response;
 
-import com.example.configvaultserver.models.UserEntity;
+import com.example.configvaultserver.dto.entity.UserDto;
 
-public record PostRegisterUserResponse(UserEntity user, String accessToken) {
+public record PostRegisterUserResponse(UserDto user, String accessToken) {
 
 }

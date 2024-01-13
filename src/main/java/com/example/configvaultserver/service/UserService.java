@@ -15,7 +15,7 @@ import com.example.configvaultserver.dto.response.GetAllUsersDto;
 import com.example.configvaultserver.dto.response.GetUserByIdDto;
 import com.example.configvaultserver.exceptions.CustomException;
 import com.example.configvaultserver.helpers.ApiResponse;
-import com.example.configvaultserver.models.UserEntity;
+import com.example.configvaultserver.models.UserModel;
 import com.example.configvaultserver.repository.UserRepository;
 import com.example.configvaultserver.response.ApiErrorResponse;
 
@@ -30,14 +30,14 @@ public class UserService {
     }
 
     public GetAllUsersDto get() {
-        List<UserEntity> users = userRepository.findAll();
+        List<UserModel> users = userRepository.findAll();
         GetAllUsersDto getAllUsersDto = new GetAllUsersDto(users);
         return getAllUsersDto;
     }
 
 
     public GetUserByIdDto getById(String id) {
-        Optional<UserEntity> user = userRepository.findById(id);
+        Optional<UserModel> user = userRepository.findById(id);
         if (!user.isPresent()) {
             throw new CustomException("User not found");
         } else {
