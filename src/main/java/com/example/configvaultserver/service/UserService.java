@@ -3,21 +3,15 @@ package com.example.configvaultserver.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.example.configvaultserver.controllers.UserController;
 import com.example.configvaultserver.dto.response.GetAllUsersDto;
 import com.example.configvaultserver.dto.response.GetUserByIdDto;
+import com.example.configvaultserver.enums.EntityEnum;
 import com.example.configvaultserver.exceptions.CustomException;
-import com.example.configvaultserver.helpers.ApiResponse;
+import com.example.configvaultserver.exceptions.EntityNotFoundException;
 import com.example.configvaultserver.models.UserModel;
 import com.example.configvaultserver.repository.UserRepository;
-import com.example.configvaultserver.response.ApiErrorResponse;
 
 @Service
 public class UserService {
@@ -35,7 +29,6 @@ public class UserService {
         return getAllUsersDto;
     }
 
-
     public GetUserByIdDto getById(String id) {
         Optional<UserModel> user = userRepository.findById(id);
         if (!user.isPresent()) {
@@ -47,8 +40,21 @@ public class UserService {
 
     }
 
-    public void deleteUserById(String id) throws NotFoundException {
-        userRepository.findById(id).orElseThrow(() -> new NotFoundException());
+    // public void deleteUserById(String id) throws NotFoundException {
+    // userRepository.findById(id).orElseThrow(() -> new NotFoundException());
+    public void deleteUserById(String id) {
+        Optional<UserModel> userModel = userRepository.findById(id);
+        if (!userModel.isPresent()) {
+            System.out.println("*************************");
+            System.out.println("*************************");
+            System.out.println("*************************");
+            System.out.println("*************************");
+            System.out.println("*************************");
+            System.out.println("*************************");
+            System.out.println("*************************");
+
+            throw new EntityNotFoundException(EntityEnum.USER);
+        }
         userRepository.deleteById(id);
     }
 

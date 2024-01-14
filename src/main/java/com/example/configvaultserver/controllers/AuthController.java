@@ -2,12 +2,12 @@ package com.example.configvaultserver.controllers;
 
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.configvaultserver.dto.entity.UserDto;
@@ -24,7 +24,7 @@ import com.example.configvaultserver.service.TokenService;
 
 public class AuthController {
 
-    private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(AuthController.class);
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(AuthController.class);
     private final TokenService tokenService;
     private final AuthService authService;
 
@@ -36,18 +36,22 @@ public class AuthController {
 
     @PostMapping("/token")
     public String getToken(Authentication authentication) {
-        LOG.debug("Token requested for user : '{}'", authentication.getName());
+        log.debug("Token requested for user : '{}'", authentication.getName());
         String token = tokenService.generateToken(authentication);
-        LOG.debug("Token granted {}", token);
+        log.debug("Token granted {}", token);
         return "" + token;
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
-    public ApiResponse<PostRegisterUserResponse> register(
+    // public ApiResponse<PostRegisterUserResponse> register(
+    public ResponseEntity<PostRegisterUserResponse> register(
             @RequestBody PostRegisterUserRequestDto postRegisterUserRequest) throws Exception {
-        return new ApiResponse<PostRegisterUserResponse>().created(authService.registerUser(postRegisterUserRequest),
-                "User registered successfully.");
+        PostRegisterUserResponse postRegisterUserResponse = authService.registerUser(postRegisterUserRequest);
+        // return new
+        // ApiResponse<PostRegisterUserResponse>().created(authService.registerUser(postRegisterUserRequest),
+        // "User registered successfully.");
+        return new ResponseEntity<PostRegisterUserResponse>(postRegisterUserResponse, HttpStatus.CREATED);
+
     }
 
     @PostMapping("/login")
